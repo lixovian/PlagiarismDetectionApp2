@@ -7,6 +7,7 @@ using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
 using FileStoringService.UseCases.Submissions.GetAssignmentSubmissions;
+using FileStoringService.UseCases.Submissions.GetSubmissionById;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,7 @@ public static class ServiceCollectionExtensions
 
         // Submissions
         services.AddScoped<IAddSubmissionRepository, EfAddSubmissionRepository>();
+        services.AddScoped<IGetSubmissionByIdRepository, EfGetSubmissionByIdRepository>();
         services.AddScoped<IListSubmissionsRepository, EfListSubmissionsRepository>();
         services.AddScoped<IGetAssignmentSubmissionsRepository, EfGetAssignmentSubmissionsRepository>();
 
