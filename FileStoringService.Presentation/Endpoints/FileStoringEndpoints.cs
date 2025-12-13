@@ -4,6 +4,7 @@ using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
 using FileStoringService.UseCases.Submissions.GetAssignmentSubmissions;
+using FileStoringService.UseCases.Submissions.GetSubmissionById;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +26,8 @@ public static class FileStoringEndpoints
             .WithTags("Submissions")
             .MapGetSubmissions()
             .MapAddSubmission()
-            .MapGetAssignmentSubmissions();
+            .MapGetAssignmentSubmissions()
+            .MapGetSubmissionById();
         
         app.MapGroup("/complex")
             .WithTags("Complex")
@@ -121,6 +123,21 @@ public static class FileStoringEndpoints
             .WithName("GetAssignmentSubmissions")
             .WithSummary("Get submissions by assignment ID")
             .WithDescription("Get all submissions that belong to a specific assignment ID")
+            .WithOpenApi();
+
+        return group;
+    }
+    
+    private static RouteGroupBuilder MapGetSubmissionById(this RouteGroupBuilder group)
+    {
+        group.MapGet("/{id:guid}", (Guid id, IGetSubmissionByIdRequestHandler handler) =>
+            {
+                var response = handler.Handle(new GetSubmissionByIdRequest(id));
+                return response is null ? Results.NotFound() : Results.Ok(response);
+            })
+            .WithName("GetSubmissionById")
+            .WithSummary("Get a submission by ID")
+            .WithDescription("Get a submission by ID from the database")
             .WithOpenApi();
 
         return group;
