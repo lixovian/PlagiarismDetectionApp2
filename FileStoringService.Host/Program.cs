@@ -15,10 +15,6 @@ builder.Services.AddUseCases();
 var app = builder.Build();
 
 app.MapOpenApi();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/openapi/api.json", "File Storing API");
-});
 
 app.MapFileStoringEndpoints();
 
