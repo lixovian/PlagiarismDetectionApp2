@@ -19,7 +19,6 @@ internal sealed class FileAnalysisDbContext(DbContextOptions<FileAnalysisDbConte
             builder.Property(x => x.IsPlagiarism).IsRequired(false);
             builder.Property(x => x.WordCloudUrl).IsRequired(false);
 
-            // Часто удобно, чтобы на одну submission был максимум один report:
             builder.HasIndex(x => x.SubmissionId).IsUnique();
         });
     }

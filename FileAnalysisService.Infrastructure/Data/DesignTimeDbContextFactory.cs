@@ -8,7 +8,7 @@ internal sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<F
     public FileAnalysisDbContext CreateDbContext(string[] args)
     {
         var options = new DbContextOptionsBuilder<FileAnalysisDbContext>()
-            .UseNpgsql("Host=127.0.0.1;Port=5432;Database=filestoring;Username=postgres;Password=postgres;")
+            .UseNpgsql("Host=127.0.0.1;Port=6432;Database=fileanalysis;Username=postgres;Password=postgres;")
             .Options;
 
         return new FileAnalysisDbContext(options);

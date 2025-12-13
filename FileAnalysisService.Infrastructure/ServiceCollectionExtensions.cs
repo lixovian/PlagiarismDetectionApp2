@@ -1,6 +1,7 @@
 ﻿using FileAnalysisService.Infrastructure.Data;
 using FileAnalysisService.Infrastructure.Data.Reports;
 using FileAnalysisService.UseCases.Reports.CreateReport;
+using FileAnalysisService.UseCases.Reports.GetReportsByAssignmentId;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +22,8 @@ public static class ServiceCollectionExtensions
         
         services.AddHostedService<MigrationRunner>();
         
-
         services.AddScoped<ICreateReportRepository, EfCreateReportRepository>();
+        services.AddScoped<IGetReportBySubmissionIdRepository, EfGetReportBySubmissionIdRepository>();
 
         services.AddHttpClient<IFileStoringClient, FileStoringClient>((serviceProvider, client) =>
         {
