@@ -71,9 +71,6 @@
 
       FileStoringApi__BaseUrl: http://filestoring-service:8080
       FileAnalysisApi__BaseUrl: http://fileanalysis-service:8080
-
-      Swagger__FileStoring: http://filestoring-service:8080/openapi/api.json
-      Swagger__FileAnalysis: http://fileanalysis-service:8080/openapi/api.json
     depends_on:
       filestoring-service:
         condition: service_started
