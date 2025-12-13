@@ -22,6 +22,8 @@ public static class ServiceCollectionExtensions
             options.UseNpgsql(configuration.GetConnectionString("Db"));
         });
 
+        services.AddHostedService<MigrationRunner>();
+        
         // Files
         services.AddScoped<IAddFileRepository, EfAddFileRepository>();
         services.AddScoped<IListFilesRepository, EfListFilesRepository>();
