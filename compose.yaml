@@ -63,3 +63,15 @@
 volumes:
   filestoring_db_data:
   fileanalysis_db_data:
+  apigateway.host:
+    image: apigateway.host
+    build:
+      context: .
+      dockerfile: ApiGateway.Host/Dockerfile
+
+  apigateway.presentation:
+    image: apigateway.presentation
+    build:
+      context: .
+      dockerfile: ApiGateway.Presentation/Dockerfile
+

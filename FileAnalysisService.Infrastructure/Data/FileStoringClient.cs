@@ -8,7 +8,6 @@ internal sealed class FileStoringClient(HttpClient httpClient) : IFileStoringCli
 {
     public SubmissionInfo GetSubmissionById(Guid submissionId)
     {
-        // ожидаем endpoint: GET /submissions/{id}
         var result = httpClient.GetFromJsonAsync<SubmissionInfo>($"/submissions/{submissionId}")
             .GetAwaiter()
             .GetResult();
@@ -21,7 +20,6 @@ internal sealed class FileStoringClient(HttpClient httpClient) : IFileStoringCli
 
     public FileInfo GetFileById(Guid fileId)
     {
-        // ожидаем endpoint: GET /files/{id}
         var result = httpClient.GetFromJsonAsync<FileInfo>($"/files/{fileId}")
             .GetAwaiter()
             .GetResult();
@@ -34,7 +32,6 @@ internal sealed class FileStoringClient(HttpClient httpClient) : IFileStoringCli
 
     public IReadOnlyList<SubmissionInfo> GetSubmissionsByAssignmentId(int assignmentId)
     {
-        // ожидаем endpoint: GET /submissions/assignment/{assignmentId}
         var result = httpClient.GetFromJsonAsync<List<SubmissionInfo>>($"/submissions/assignment/{assignmentId}")
             .GetAwaiter()
             .GetResult();

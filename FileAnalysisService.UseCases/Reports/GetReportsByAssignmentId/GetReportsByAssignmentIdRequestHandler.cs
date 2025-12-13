@@ -10,12 +10,8 @@ internal sealed class GetReportsByAssignmentIdRequestHandler(
 {
     public IReadOnlyList<CreateReportResponse> Handle(GetReportsByAssignmentIdRequest request)
     {
-        // 1) Берём submissions по assignment
         var submissions = fileStoringClient.GetSubmissionsByAssignmentId(request.AssignmentId);
 
-        // 2) Для каждого submission собираем report:
-        //    - если уже есть в БД -> отдаём
-        //    - если нет -> создаём через CreateReport handler
         var results = new List<CreateReportResponse>(submissions.Count);
 
         foreach (var submission in submissions.OrderBy(s => s.SubmittedAt))
