@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FileAnalysisService.Entities\FileAnalysisService.Entities.csproj" />
+      <ProjectReference Include="..\FileAnalysisService.Infrastructure\FileAnalysisService.Infrastructure.csproj" />
+      <ProjectReference Include="..\FileAnalysisService.UseCases\FileAnalysisService.UseCases.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
 </Project>

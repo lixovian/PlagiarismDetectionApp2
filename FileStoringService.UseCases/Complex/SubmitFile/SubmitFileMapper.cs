@@ -2,7 +2,7 @@
 using System.Text;
 using FileStoringService.Entities.Models;
 
-namespace FileStoringService.UseCases.Submissions.SubmitFile;
+namespace FileStoringService.UseCases.Complex.SubmitFile;
 
 internal static class SubmitFileMapper
 {

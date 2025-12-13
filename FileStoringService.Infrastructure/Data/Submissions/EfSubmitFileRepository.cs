@@ -1,5 +1,5 @@
 ﻿using FileStoringService.Entities.Models;
-using FileStoringService.UseCases.Submissions.SubmitFile;
+using FileStoringService.UseCases.Complex.SubmitFile;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStoringService.Infrastructure.Data.Submissions;

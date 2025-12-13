@@ -1,0 +1,3 @@
+﻿namespace FileAnalysisService.UseCases.Reports.GetReportsByAssignmentId;
+
+public sealed record GetReportsByAssignmentIdRequest(int AssignmentId);

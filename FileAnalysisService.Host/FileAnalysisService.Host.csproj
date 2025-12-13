@@ -9,12 +9,25 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FileAnalysisService.Entities\FileAnalysisService.Entities.csproj" />
+      <ProjectReference Include="..\FileAnalysisService.Infrastructure\FileAnalysisService.Infrastructure.csproj" />
+      <ProjectReference Include="..\FileAnalysisService.Presentation\FileAnalysisService.Presentation.csproj" />
+      <ProjectReference Include="..\FileAnalysisService.UseCases\FileAnalysisService.UseCases.csproj" />
     </ItemGroup>
 
 </Project>

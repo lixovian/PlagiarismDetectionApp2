@@ -1,4 +1,4 @@
-﻿namespace FileAnalisysService.Entities.Models;
+﻿namespace FileAnalysisService.Entities.Models;
 
 public sealed class Report
 {

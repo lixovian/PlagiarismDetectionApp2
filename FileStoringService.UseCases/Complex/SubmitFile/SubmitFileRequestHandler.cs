@@ -1,4 +1,4 @@
-﻿namespace FileStoringService.UseCases.Submissions.SubmitFile;
+﻿namespace FileStoringService.UseCases.Complex.SubmitFile;
 
 internal sealed class SubmitFileRequestHandler(ISubmitFileRepository repository) : ISubmitFileRequestHandler
 {
