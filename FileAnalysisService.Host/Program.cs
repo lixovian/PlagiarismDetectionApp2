@@ -14,6 +14,11 @@ builder.Services.AddUseCases();
 var app = builder.Build();
 
 app.MapOpenApi();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/openapi/api.json", "File Analysis API");
+});
+
 
 app.MapFileAnalysisEndpoints();
 
