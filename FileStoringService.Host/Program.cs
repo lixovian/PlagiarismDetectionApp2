@@ -9,7 +9,6 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddOpenApi("api");
 
 builder.Services.AddInfrastructure();
-
 builder.Services.AddUseCases();
 
 var app = builder.Build();
@@ -19,7 +18,6 @@ app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/openapi/api.json", "File Storing API");
 });
-
 
 app.MapFileStoringEndpoints();
 
