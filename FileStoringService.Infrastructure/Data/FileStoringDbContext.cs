@@ -16,6 +16,7 @@ internal sealed class FileStoringDbContext(DbContextOptions<FileStoringDbContext
             builder.ToTable("StoredFiles");
 
             builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Text).IsRequired();
             builder.Property(x => x.Size).IsRequired();
             builder.Property(x => x.Sha256).IsRequired();
             builder.Property(x => x.CreatedAt).IsRequired();

@@ -7,6 +7,7 @@ public class StoredFile
     public required string Name { get; init; }
     public required long Size { get; init; }
     
+    public required string Text { get; init; }
     public required string Sha256 { get; init; }
 
     public required DateTime CreatedAt { get; init; }
