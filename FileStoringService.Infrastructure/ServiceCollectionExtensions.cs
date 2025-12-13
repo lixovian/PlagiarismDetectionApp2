@@ -2,6 +2,7 @@
 using FileStoringService.Infrastructure.Data.Files;
 using FileStoringService.Infrastructure.Data.Submissions;
 using FileStoringService.UseCases.Files.AddFile;
+using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
@@ -24,6 +25,7 @@ public static class ServiceCollectionExtensions
         // Files
         services.AddScoped<IAddFileRepository, EfAddFileRepository>();
         services.AddScoped<IListFilesRepository, EfListFilesRepository>();
+        services.AddScoped<IGetFileByIdRepository, EfGetFileByIdRepository>();
 
         // Submissions
         services.AddScoped<IAddSubmissionRepository, EfAddSubmissionRepository>();

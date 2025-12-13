@@ -1,9 +1,11 @@
 ﻿using FileStoringService.UseCases.Files.AddFile;
+using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FileStoringService.Presentation.Endpoints;
 
@@ -11,55 +13,92 @@ public static class FileStoringEndpoints
 {
     public static WebApplication MapFileStoringEndpoints(this WebApplication app)
     {
-        MapFilesEndpoints(app);
-        MapSubmissionsEndpoints(app);
+        app.MapGroup("/files")
+            .WithTags("Files")
+            .MapGetFiles()
+            .MapAddFile()
+            .MapGetFileById();
+
+        app.MapGroup("/submissions")
+            .WithTags("Submissions")
+            .MapGetSubmissions()
+            .MapAddSubmission();
 
         return app;
     }
 
-    private static void MapFilesEndpoints(WebApplication app)
+    private static RouteGroupBuilder MapGetFiles(this RouteGroupBuilder group)
     {
-        app.MapGet("/files", (IListFilesRequestHandler handler) =>
-        {
-            var response = handler.Handle();
-            return Results.Ok(response);
-        })
-        .WithTags("Files")
-        .WithName("GetFiles")
-        .WithSummary("Get all files")
-        .WithDescription("Get all stored files metadata from the database");
+        group.MapGet("", (IListFilesRequestHandler handler) =>
+            {
+                var response = handler.Handle();
+                return Results.Ok(response);
+            })
+            .WithName("GetFiles")
+            .WithSummary("Get all files")
+            .WithDescription("Get all stored files metadata from the database")
+            .WithOpenApi();
 
-        app.MapPost("/files", (AddFileRequest request, IAddFileRequestHandler handler) =>
-        {
-            var response = handler.Handle(request);
-            return Results.Ok(response);
-        })
-        .WithTags("Files")
-        .WithName("AddFile")
-        .WithSummary("Add a new file")
-        .WithDescription("Add a new file metadata record to the database");
+        return group;
     }
 
-    private static void MapSubmissionsEndpoints(WebApplication app)
+    private static RouteGroupBuilder MapAddFile(this RouteGroupBuilder group)
     {
-        app.MapGet("/submissions", (IListSubmissionsRequestHandler handler) =>
-        {
-            var response = handler.Handle();
-            return Results.Ok(response);
-        })
-        .WithTags("Submissions")
-        .WithName("GetSubmissions")
-        .WithSummary("Get all submissions")
-        .WithDescription("Get all submissions from the database");
+        group.MapPost("", (AddFileRequest request, IAddFileRequestHandler handler) =>
+            {
+                var response = handler.Handle(request);
+                return Results.Ok(response);
+            })
+            .WithName("AddFile")
+            .WithSummary("Add a new file")
+            .WithDescription("Add a new file metadata record to the database")
+            .WithOpenApi();
 
-        app.MapPost("/submissions", (AddSubmissionRequest request, IAddSubmissionRequestHandler handler) =>
-        {
-            var response = handler.Handle(request);
-            return Results.Ok(response);
-        })
-        .WithTags("Submissions")
-        .WithName("AddSubmission")
-        .WithSummary("Add a new submission")
-        .WithDescription("Add a new submission to the database");
+        return group;
+    }
+
+    private static RouteGroupBuilder MapGetFileById(this RouteGroupBuilder group)
+    {
+        group.MapGet("/{id}", (Guid id, IGetFileByIdRequestHandler handler) =>
+            {
+                var response = handler.Handle(new GetFileByIdRequest(id));
+                return response is null ? Results.NotFound() : Results.Ok(response);
+            })
+            .WithName("GetFileById")
+            .WithSummary("Get a file by ID")
+            .WithDescription("Get a stored file metadata record by ID from the database")
+            .WithOpenApi();
+
+        return group;
+    }
+
+    private static RouteGroupBuilder MapGetSubmissions(this RouteGroupBuilder group)
+    {
+        group.MapGet("", (IListSubmissionsRequestHandler handler) =>
+            {
+                var response = handler.Handle();
+                return Results.Ok(response);
+            })
+            .WithName("GetSubmissions")
+            .WithSummary("Get all submissions")
+            .WithDescription("Get all submissions from the database")
+            .WithOpenApi();
+
+        return group;
+    }
+
+    private static RouteGroupBuilder MapAddSubmission(this RouteGroupBuilder group)
+    {
+        group.MapPost("", (AddSubmissionRequest request, IAddSubmissionRequestHandler handler) =>
+            {
+                var response = handler.Handle(request);
+                return Results.Ok(response);
+            })
+            .WithName("AddSubmission")
+            .WithSummary("Add a new submission")
+            .WithDescription("Add a new submission to the database")
+            .WithOpenApi();
+
+        return group;
     }
 }

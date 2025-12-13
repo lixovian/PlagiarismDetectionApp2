@@ -16,9 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Files\GetFileBySubmissionId\" />
       <Folder Include="Submissions\GetAssignmentSubmissions\" />
-      <Folder Include="Submissions\GetFileBySubmissionId\" />
     </ItemGroup>
 
 </Project>
