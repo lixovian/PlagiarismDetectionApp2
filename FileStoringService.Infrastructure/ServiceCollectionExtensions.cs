@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<FileStoringDbContext>((serviceProvider, options) =>
         {
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            options.UseNpgsql(configuration.GetConnectionString("Default"));
+            options.UseNpgsql(configuration.GetConnectionString("Db"));
         });
 
         // Files
