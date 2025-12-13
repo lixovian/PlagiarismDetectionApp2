@@ -14,8 +14,4 @@ internal static partial class DataMapper
     /* Submissions */
     public static partial Submission ToEntity(this SubmissionDto dto);
     public static partial SubmissionDto ToDto(this Submission entity);
-
-    /* Utils */
-    private static int ToType(this ContentType type) => (int)type;
-    private static ContentType ToType(this int type) => (ContentType)type;
 }

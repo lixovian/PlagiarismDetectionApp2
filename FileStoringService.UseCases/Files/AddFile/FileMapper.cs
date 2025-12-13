@@ -9,7 +9,6 @@ internal static class FileMapper
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            Type = request.Type,
             Size = request.Size,
             Sha256 = request.Sha256,
             CreatedAt = DateTime.UtcNow
@@ -19,7 +18,6 @@ internal static class FileMapper
         new AddFileResponse(
             file.Id,
             file.Name,
-            file.Type,
             file.Size,
             file.Sha256,
             file.CreatedAt
