@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FileStoringService.Entities\FileStoringService.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+      <PackageReference Include="Riok.Mapperly" Version="4.3.1-next.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Files\GetFileBySubmissionId\" />
+      <Folder Include="Submissions\GetAssignmentSubmissions\" />
+      <Folder Include="Submissions\GetFileBySubmissionId\" />
+    </ItemGroup>
+
+</Project>

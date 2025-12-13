@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FileStoringService.Entities\FileStoringService.Entities.csproj" />
+      <ProjectReference Include="..\FileStoringService.Infrastructure\FileStoringService.Infrastructure.csproj" />
+      <ProjectReference Include="..\FileStoringService.UseCases\FileStoringService.UseCases.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
+</Project>

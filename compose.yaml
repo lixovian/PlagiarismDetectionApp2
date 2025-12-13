@@ -1,0 +1,86 @@
+﻿services:
+  filestoring-db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - filestoring_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  filestoring-service:
+    build:
+      context: ./FileStoringService
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: Server=filestoring-db:5432;Database=postgres;User Id=postgres;Password=postgres;
+      FileAnalysisApi__BaseUrl: http://fileanalysis-service:8080
+      Storage__RootPath: /data/files
+    volumes:
+      - filestoring_files:/data/files
+    depends_on:
+      filestoring-db:
+        condition: service_healthy
+      fileanalysis-service:
+        condition: service_started
+
+  fileanalysis-db:
+    image: postgres:16
+    ports:
+      - "6432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - fileanalysis_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  fileanalysis-service:
+    build:
+      context: ./FileAnalysisService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: Server=fileanalysis-db:5432;Database=postgres;User Id=postgres;Password=postgres;
+      FileStoringApi__BaseUrl: http://filestoring-service:8080
+    depends_on:
+      fileanalysis-db:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: ./ApiGateway
+      dockerfile: Dockerfile
+    ports:
+      - "5002:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      FileStoringApi__BaseUrl: http://filestoring-service:8080
+      FileAnalysisApi__BaseUrl: http://fileanalysis-service:8080
+    depends_on:
+      filestoring-service:
+        condition: service_started
+      fileanalysis-service:
+        condition: service_started
+
+volumes:
+  filestoring_db_data:
+  fileanalysis_db_data:
+  filestoring_files:
