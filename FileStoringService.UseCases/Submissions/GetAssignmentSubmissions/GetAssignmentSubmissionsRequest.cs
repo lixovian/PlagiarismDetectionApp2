@@ -1,0 +1,3 @@
+﻿namespace FileStoringService.UseCases.Submissions.GetAssignmentSubmissions;
+
+public sealed record GetAssignmentSubmissionsRequest(int AssignmentId);

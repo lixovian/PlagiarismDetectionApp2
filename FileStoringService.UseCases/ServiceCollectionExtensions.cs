@@ -2,7 +2,9 @@ using FileStoringService.UseCases.Files.AddFile;
 using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
+using FileStoringService.UseCases.Submissions.GetAssignmentSubmissions;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
+using FileStoringService.UseCases.Submissions.SubmitFile;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FileStoringService.UseCases;
@@ -11,6 +13,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddUseCases(this IServiceCollection services)
     {
+        services.AddScoped<ISubmitFileRequestHandler, SubmitFileRequestHandler>();
+        
         // files
         services.AddScoped<IAddFileRequestHandler, AddFileRequestHandler>();
         services.AddScoped<IListFilesRequestHandler, ListFilesRequestHandler>();
@@ -19,6 +23,7 @@ public static class ServiceCollectionExtensions
         // submissions
         services.AddScoped<IAddSubmissionRequestHandler, AddSubmissionRequestHandler>();
         services.AddScoped<IListSubmissionsRequestHandler, ListSubmissionsRequestHandler>();
+        services.AddScoped<IGetAssignmentSubmissionsRequestHandler, GetAssignmentSubmissionsRequestHandler>();
 
         return services;
     }

@@ -2,7 +2,9 @@
 using FileStoringService.UseCases.Files.GetFileById;
 using FileStoringService.UseCases.Files.ListFiles;
 using FileStoringService.UseCases.Submissions.AddSubmission;
+using FileStoringService.UseCases.Submissions.GetAssignmentSubmissions;
 using FileStoringService.UseCases.Submissions.ListSubmissions;
+using FileStoringService.UseCases.Submissions.SubmitFile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -22,7 +24,13 @@ public static class FileStoringEndpoints
         app.MapGroup("/submissions")
             .WithTags("Submissions")
             .MapGetSubmissions()
-            .MapAddSubmission();
+            .MapAddSubmission()
+            .MapGetAssignmentSubmissions();
+        
+        app.MapGroup("/complex")
+            .WithTags("Complex")
+            .MapSubmitFile();
+
 
         return app;
     }
@@ -101,4 +109,36 @@ public static class FileStoringEndpoints
 
         return group;
     }
+    
+    private static RouteGroupBuilder MapGetAssignmentSubmissions(this RouteGroupBuilder group)
+    {
+        group.MapGet("assignment/{assignmentId:int}",
+                (int assignmentId, IGetAssignmentSubmissionsRequestHandler handler) =>
+                {
+                    var response = handler.Handle(new GetAssignmentSubmissionsRequest(assignmentId));
+                    return Results.Ok(response);
+                })
+            .WithName("GetAssignmentSubmissions")
+            .WithSummary("Get submissions by assignment ID")
+            .WithDescription("Get all submissions that belong to a specific assignment ID")
+            .WithOpenApi();
+
+        return group;
+    }
+
+    private static RouteGroupBuilder MapSubmitFile(this RouteGroupBuilder group)
+    {
+        group.MapPost("submit-file", (SubmitFileRequest request, ISubmitFileRequestHandler handler) =>
+            {
+                var response = handler.Handle(request);
+                return Results.Ok(response);
+            })
+            .WithName("SubmitFile")
+            .WithSummary("Submit a file for an assignment")
+            .WithDescription("Creates a stored file (with computed size and sha256) and creates a submission linked to that file")
+            .WithOpenApi();
+
+        return group;
+    }
+
 }
