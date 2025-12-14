@@ -1,5 +1,6 @@
 ﻿using FileAnalysisService.Infrastructure.Data;
 using FileAnalysisService.Infrastructure.Data.Reports;
+using FileAnalysisService.Infrastructure.WordCloud;
 using FileAnalysisService.UseCases.Reports.CreateReport;
 using FileAnalysisService.UseCases.Reports.GetReportsByAssignmentId;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,8 @@ public static class ServiceCollectionExtensions
         
         services.AddScoped<ICreateReportRepository, EfCreateReportRepository>();
         services.AddScoped<IGetReportBySubmissionIdRepository, EfGetReportBySubmissionIdRepository>();
+        
+        services.AddScoped<IWordCloudGenerator, QuickChartWordCloudGenerator>();
 
         services.AddHttpClient<IFileStoringClient, FileStoringClient>((serviceProvider, client) =>
         {

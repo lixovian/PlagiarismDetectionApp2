@@ -17,5 +17,6 @@ public sealed record SubmissionInfo(
 
 public sealed record FileInfo(
     Guid Id,
+    string Text,
     string Sha256
 );

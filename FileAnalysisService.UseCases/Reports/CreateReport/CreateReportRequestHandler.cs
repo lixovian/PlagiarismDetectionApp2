@@ -4,7 +4,8 @@ namespace FileAnalysisService.UseCases.Reports.CreateReport;
 
 internal sealed class CreateReportRequestHandler(
     ICreateReportRepository repository,
-    IFileStoringClient fileStoringClient)
+    IFileStoringClient fileStoringClient,
+    IWordCloudGenerator wordCloudGenerator)
     : ICreateReportRequestHandler
 {
     public CreateReportResponse Handle(CreateReportRequest request)
@@ -26,12 +27,15 @@ internal sealed class CreateReportRequestHandler(
             })
             .Any(sha => sha == currentFile.Sha256);
 
+        var file = fileStoringClient.GetFileById(submission.StoredFileId);
+        var wordCloudUrl = wordCloudGenerator.Generate(file.Text);
+        
         var report = new Report
         {
             Id = Guid.NewGuid(),
             SubmissionId = submission.Id,
             IsPlagiarism = isPlagiarism,
-            WordCloudUrl = null
+            WordCloudUrl = wordCloudUrl
         };
 
         repository.Add(report);
